@@ -4,9 +4,9 @@ const fetch = require('node-fetch');
 async function run() {
   try {
     const githubToken = core.getInput('github-token', { required: true });
+    console.log(`githubToken ${githubToken}`)
     const lambdaEndpoint = core.getInput('lambda-endpoint', { required: true });
 
-    // Get GitHub context
     const context = require('@actions/github').context;
     const { pull_request } = context.payload;
 
@@ -15,7 +15,6 @@ async function run() {
       return;
     }
 
-    // Construct the payload
     const payload = {
       action: 'opened',
       pull_request: pull_request,
@@ -25,21 +24,19 @@ async function run() {
       repository: {
         owner: { id: context.payload.repository?.owner?.id },
       },
-      githubToken: githubToken, // Add the token to the payload
+      githubToken: githubToken, // Include in payload (optional if using headers)
     };
 
-    // Generate the signature
     const signature = 'sha256=' + require('crypto')
       .createHmac('sha256', process.env.WEBHOOK_SECRET || 'givfog-Mugmu1-hetdax')
       .update(JSON.stringify(payload))
       .digest('hex');
 
-    // Call your Lambda endpoint
     const response = await fetch(lambdaEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-hub-signature-256': signature, // Restored signature
+        'x-hub-signature-256': signature,
         'Authorization': `Bearer ${githubToken}`, // Token in headers
       },
       body: JSON.stringify(payload),
