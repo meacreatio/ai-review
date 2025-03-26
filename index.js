@@ -32,6 +32,7 @@ async function run() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'X-Test-Header': 'HelloWorld', // Custom header for testing
         'x-hub-signature-256': 'sha256=' + require('crypto')
           .createHmac('sha256', process.env.WEBHOOK_SECRET || 'givfog-Mugmu1-hetdax')
           .update(JSON.stringify(payload))
