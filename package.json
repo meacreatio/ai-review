@@ -1,0 +1,16 @@
+{
+  "name": "grok-pr-reviewer-action",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^6.0.0",
+    "node-fetch": "^2.6.7"
+  },
+  "scripts": {
+    "build": "ncc build index.js -o dist"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.0"
+  }
+}
