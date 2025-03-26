@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 async function run() {
   try {
     const githubToken = core.getInput('github-token', { required: true });
-    console.log(`githubToken ${githubToken}`)
+    core.info(`githubToken ${githubToken}`)
     const lambdaEndpoint = core.getInput('lambda-endpoint', { required: true });
 
     const context = require('@actions/github').context;
