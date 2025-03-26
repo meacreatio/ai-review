@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 
 async function run() {
   try {
-    core.info(`githubToken: ${core.githubToken}`)
+    core.info("HELLO")
     const githubToken = core.getInput('github-token', { required: true });
     core.info(`githubToken: ${githubToken}`)
     const lambdaEndpoint = core.getInput('lambda-endpoint', { required: true });
