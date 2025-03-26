@@ -3,11 +3,10 @@ const fetch = require('node-fetch');
 
 async function run() {
   try {
-    core.info("HELLO")
     const githubToken = core.getInput('github-token', { required: true });
-    core.info(`githubToken: ${githubToken}`)
     const lambdaEndpoint = core.getInput('lambda-endpoint', { required: true });
 
+    // Get GitHub context (provided by the GitHub Action runtime)
     const context = require('@actions/github').context;
     const { pull_request } = context.payload;
 
@@ -16,8 +15,9 @@ async function run() {
       return;
     }
 
+    // Construct the payload to match what your Lambda expects
     const payload = {
-      action: 'opened',
+      action: 'opened', // Simulate an "opened" event to trigger the review
       pull_request: pull_request,
       installation: {
         id: context.payload.installation?.id,
@@ -25,20 +25,17 @@ async function run() {
       repository: {
         owner: { id: context.payload.repository?.owner?.id },
       },
-      githubToken: githubToken, // Include in payload (optional if using headers)
     };
 
-    const signature = 'sha256=' + require('crypto')
-      .createHmac('sha256', process.env.WEBHOOK_SECRET || 'givfog-Mugmu1-hetdax')
-      .update(JSON.stringify(payload))
-      .digest('hex');
-
+    // Call your Lambda endpoint
     const response = await fetch(lambdaEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-hub-signature-256': signature,
-        'Authorization': `Bearer ${githubToken}`, // Token in headers
+        'x-hub-signature-256': 'sha256=' + require('crypto')
+          .createHmac('sha256', process.env.WEBHOOK_SECRET || 'givfog-Mugmu1-hetdax')
+          .update(JSON.stringify(payload))
+          .digest('hex'),
       },
       body: JSON.stringify(payload),
     });
