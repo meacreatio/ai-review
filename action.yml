@@ -1,0 +1,12 @@
+name: 'Grok PR Reviewer'
+description: 'Run Grok PR Reviewer on your pull requests'
+inputs:
+  github-token:
+    description: 'GitHub token for authentication'
+    required: true
+  lambda-endpoint:
+    description: 'The endpoint URL of your Lambda function'
+    required: true
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
