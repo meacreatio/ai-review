@@ -8,7 +8,7 @@ async function run() {
 
     const githubToken = core.getInput('github-token', { required: true });
     // core.info(`core: ${JSON.stringify(core)}}`);
-    const lambdaEndpoint = ''
+    const lambdaEndpoint = 'https://auafv7i3xslo4i3iirk3rcgkae0egfja.lambda-url.us-east-1.on.aws/'
 
     core.info('Starting Grok PR Reviewer Action');
 
