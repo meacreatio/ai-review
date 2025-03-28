@@ -11,6 +11,11 @@
     "build": "ncc build index.js -o dist"
   },
   "devDependencies": {
+    "@aws-sdk/protocol-http": "^3.0.0",
+    "@aws-sdk/signature-v4": "^3.0.0",
+    "@aws-sdk/node-http-handler": "^3.0.0",
+    "@aws-crypto/sha256-js": "^5.0.0",
+    "@aws-sdk/credential-provider-node": "^3.0.0",
     "@vercel/ncc": "^0.38.0"
   }
 }
